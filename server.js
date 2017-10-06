@@ -21,7 +21,7 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
+  password: "tucuman254",
   database: "burgerK_db"
 });
 
@@ -30,7 +30,6 @@ connection.connect(function(err) {
     console.error("error connecting: " + err.stack);
     return;
   }
-
   console.log("connected as id " + connection.threadId);
 });
 
@@ -46,7 +45,8 @@ app.get("/", function(req, res) {
 
 // Create a new burger
 app.post("/addBurger", function(req, res) {
-    connection.query("INSERT INTO burgers (burger) VALUES (?)", [req.body.burger], function(err, result) {
+    // connection.query("INSERT INTO burgers (burger) VALUES (?) SET eaten='0' ", [req.body.burger], function(err, result) {
+        connection.query("INSERT INTO `burgers` (`id`, `burger`, `eaten`) VALUES (NULL, (?), '0') ", [req.body.burger], function(err, result) {
       if (err) {
         return res.status(500).end();
       }
@@ -55,6 +55,27 @@ app.post("/addBurger", function(req, res) {
       console.log({ id: result.insertId });
     });
   });
+
+
+//   INSERT INTO `burgers` (`id`, `burger_name`, `eaten`, `createdAt`) VALUES (NULL, 'taco burger', '1', '');
+
+  app.post("/moveBurger/:id", function(req, res) {
+        connection.query("UPDATE burgers SET eaten = '1' WHERE id = ?", [req.params.id], function(err, result) {
+          if (err) {
+            // If an error occurred, send a generic server faliure
+            return res.status(500).end();
+          } else if (result.changedRows == 0) {
+            // If no rows were changed, then the ID must not exist, so 404
+            return res.status(404).end();
+          } else {
+            // res.status(200).end();
+            res.redirect("/");
+          }
+        });
+      });
+      
+
+
 
 
 
