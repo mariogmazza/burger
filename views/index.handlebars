@@ -1,31 +1,27 @@
 <div class="container">
     <ul id="leftList">
-        {{#each burgers}}
-        {{#unless eaten}}
+        {{#each burgers}} {{#unless eaten}}
         <li id="burger{{this.id}}">
             <span>
                 {{this.id}}. {{this.burger}}
             </span>
-                <button id="btn{{this.id}}" data-burgerid="{{this.id}}" class="eatBurger">Devour it!</button>
-            
+            <button id="btn{{this.id}}" data-burgerid="{{this.id}}" class="eatBurger">Devour it!</button>
+
         </li>
-        {{/unless}}
-        {{/each}}
+        {{/unless}} {{/each}}
     </ul>
 </div>
 
 <div class="container">
     <ul id="rightList">
-        {{#each burgers}}
-         {{#if eaten}}
+        {{#each burgers}} {{#if eaten}}
 
         <li id="burger{{this.id}}">
             <p>
                 {{this.id}}. {{this.burger}}
             </p>
         </li>
-        {{/if}}
-        {{/each}}
+        {{/if}} {{/each}}
     </ul>
 </div>
 
@@ -64,36 +60,17 @@
 
 
     $(".eatBurger").on("click", function (event) {
-        // Make sure to preventDefault on a submit event.
-       /* event.preventDefault();
-        var id = $(this).data("burgerid");
-        console.log("this move " + id);
-
-        console.log("#burger" + id)
-        $("#rightList").append($('#burger' + id));
-        $("#btn" + id).remove();
-
-          // location.reload();
-        */
-
         var id = $(this).data("burgerid");
 
-    // Send the DELETE request.
-    $.ajax("/moveBurger/" + id, {
-      type: "POST"
-    }).then(
-      function() {
-        console.log("UPDATE id ", id);
-        // Reload the page to get the updated list
-        location.reload();
-      }
-    );
-
-
-
-
-
- 
+        $.ajax("/moveBurger/" + id, {
+            type: "POST"
+        }).then(
+            function () {
+                console.log("UPDATE id ", id);
+                // Reload the page to get the updated list
+                location.reload();
+            }
+            );
     });
 
 </script>

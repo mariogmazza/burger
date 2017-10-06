@@ -45,7 +45,6 @@ app.get("/", function(req, res) {
 
 // Create a new burger
 app.post("/addBurger", function(req, res) {
-    // connection.query("INSERT INTO burgers (burger) VALUES (?) SET eaten='0' ", [req.body.burger], function(err, result) {
         connection.query("INSERT INTO `burgers` (`id`, `burger`, `eaten`) VALUES (NULL, (?), '0') ", [req.body.burger], function(err, result) {
       if (err) {
         return res.status(500).end();
@@ -56,9 +55,6 @@ app.post("/addBurger", function(req, res) {
     });
   });
 
-
-//   INSERT INTO `burgers` (`id`, `burger_name`, `eaten`, `createdAt`) VALUES (NULL, 'taco burger', '1', '');
-
   app.post("/moveBurger/:id", function(req, res) {
         connection.query("UPDATE burgers SET eaten = '1' WHERE id = ?", [req.params.id], function(err, result) {
           if (err) {
@@ -68,7 +64,6 @@ app.post("/addBurger", function(req, res) {
             // If no rows were changed, then the ID must not exist, so 404
             return res.status(404).end();
           } else {
-            // res.status(200).end();
             res.redirect("/");
           }
         });
