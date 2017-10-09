@@ -18,12 +18,30 @@ app.set("view engine", "handlebars");
 
 var mysql = require("mysql");
 
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "tucuman254",
-  database: "burgers_db"
-});
+// var connection = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "tucuman254",
+//   database: "burgers_db"
+// });
+
+
+var connection;
+if(process.env.JAWSDB_URL) {
+  //Heroku deployment
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+  //local host
+    connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "tucuman254",
+        database: "burgers_db",
+    });
+};
+
+
+
 
 connection.connect(function(err) {
   if (err) {
