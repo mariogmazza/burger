@@ -5,7 +5,7 @@ var exphbs = require("express-handlebars");
 // Sets up the Express App
 // =============================================================
 var app = express();
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3030;
 
 
 // Sets up the Express app to handle data parsing
@@ -21,8 +21,8 @@ var mysql = require("mysql");
 var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
-  database: "burgerK_db"
+  password: "tucuman254",
+  database: "burgers_db"
 });
 
 connection.connect(function(err) {
@@ -44,7 +44,8 @@ app.get("/", function(req, res) {
 });
 
 // Create a new burger
-app.post("/addBurger", function(req, res) {
+app.post("/addBurger/", function(req, res) {
+  // console.log(req.body.burger);
         connection.query("INSERT INTO `burgers` (`id`, `burger`, `eaten`) VALUES (NULL, (?), '0') ", [req.body.burger], function(err, result) {
       if (err) {
         return res.status(500).end();

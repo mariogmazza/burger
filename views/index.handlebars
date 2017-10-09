@@ -2,10 +2,11 @@
     <ul id="leftList">
         {{#each burgers}} {{#unless eaten}}
         <li id="burger{{this.id}}">
-            <span>
+            <p>
                 {{this.id}}. {{this.burger}}
-            </span>
-            <button id="btn{{this.id}}" data-burgerid="{{this.id}}" class="eatBurger">Devour it!</button>
+                 <button id="btn{{this.id}}" data-burgerid="{{this.id}}" class="eatBurger">Devour it!</button>
+            </p>
+            <!-- <button id="btn{{this.id}}" data-burgerid="{{this.id}}" class="eatBurger">Devour it!</button> -->
 
         </li>
         {{/unless}} {{/each}}
@@ -44,7 +45,7 @@
         };
 
         // Send the POST request.
-        $.ajax("/addBurger", {
+        $.ajax("/addBurger/", {
             type: "POST",
             data: newBurger
         }).then(
@@ -69,8 +70,7 @@
                 console.log("UPDATE id ", id);
                 // Reload the page to get the updated list
                 location.reload();
-            }
-            );
+            });
     });
 
 </script>
